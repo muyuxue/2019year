@@ -1,13 +1,32 @@
 <template>
     <div id="app">
-        <router-view id="viewRouter" class="animated fadeIn faster"/>
+        <router-view v-if="isR" id="viewRouter" class="animated fadeIn faster"/>
+
+        <audio class="success" src="./assets/bg1.mp3" autoplay loop></audio>
     </div>
 </template>
 
 <script>
 export default {
     name: "App",
-    mounted() {}
+    provide() {
+        return {
+            reload: this.reload
+        };
+    },
+    data() {
+        return {
+            isR: true
+        };
+    },
+    methods: {
+        reload() {
+            this.isR = false;
+            this.$nextTick(() => {
+                this.isR = true;
+            });
+        }
+    }
 };
 </script>
 

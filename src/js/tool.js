@@ -33,6 +33,10 @@ const Tool = {
       prize: "" + prize
     });
     all.tool.setLocal("prizeList", prizeList);
+  },
+  playAudio(id) {
+
+    let audioEle = document.getElementById(id).play();
   }
 };
 export default Tool;

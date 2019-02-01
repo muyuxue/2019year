@@ -4,6 +4,8 @@
         <img class="light animated fadeInLeft" src="../assets/threeLight.png">
         <img class="lightA animated fadeInRight" src="../assets/threeLightA.png" @click="prizes">
         <img class="bottom animated fadeInUp" src="../assets/threeBottom.png">
+        <div class="gameTime">本轮游戏次数：{{time}}</div>
+        <audio class="secondAudio" id="secondAudio" src="../assets/second.mp3" preload="auto"></audio>
         <div class="contentBox">
             <img class="title animated rubberBand" src="../assets/btnSecond.png" @click="fresh">
             <div class="gameBar">
@@ -77,12 +79,14 @@ export default {
             timer: null
         };
     },
+    inject: ["reload"],
     methods: {
         back() {
             all.router.push("/");
         },
         fresh() {
-            window.location.href = location.href;
+            // window.location.href = location.href;
+            this.reload();
         },
 
         prizes() {
@@ -106,6 +110,7 @@ export default {
                 this.name = this.list[index];
                 all.tool.setLocal("secondTime", this.time + 1);
                 all.tool.delKey(this.list, this.name);
+                all.tool.playAudio("secondAudio");
                 all.tool.savePaizeList("second", this.name, this.amount);
                 clearInterval(this.timer);
                 this.timer = null;
@@ -212,25 +217,25 @@ export default {
 }
 .numberBgName {
     width: 452px;
-    height: 143px;
+    /* height: 143px; */
     /*background:url("../assets/numberBgName.png") no-repeat;
         background-size:100% 100%;*/
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
     font-size: 48px;
     color: #f9ca80;
 }
 .name {
     display: flex;
-    width: 40px;
-    height: 40px;
+    /* width: 40px; */
+    height: 2rem;
 }
 .name img {
-    width: 100%;
-    height: auto;
+    height: 100%;
+    width: auto;
 }
 .number {
     width: 98px;
@@ -275,5 +280,12 @@ export default {
 }
 .animaD .numberD {
     animation: numMove 0.1s infinite linear;
+}
+.gameTime {
+    position: absolute;
+    right: 3.5rem;
+    top: 1rem;
+    color: #ec844b;
+    font-size: 0.5rem;
 }
 </style>

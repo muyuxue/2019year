@@ -5,17 +5,20 @@ P<template>
         <img class="lightA animated fadeInRight" src="../assets/threeLightA.png">
         <img class="bottom animated fadeInUp" src="../assets/threeBottom.png">
         <div class="contentBox">
-            <img
-                v-if="stage.length>0"
-                class="title animated rubberBand"
-                @click="next"
-                :src=" require(`../assets/btn${this.stage
+            <div class="prizeTitle animated rubberBand" @click="next">
+                <img
+                    v-if="stage.length>0"
+                    class="title"
+                    :src=" require(`../assets/btn${this.stage
             .charAt(0)
             .toUpperCase() + this.stage.slice(1)}.png`)"
-            >
-            <div class="prizes contentBox">
+                >
+                <img src="../assets/prize_title.png" class="title">
+            </div>
+
+            <div class="prizes contentBox wrap">
                 <div class="list row" v-for="(item , index) in prizes" :key="item.name+index">
-                    <span>恭喜：</span>
+                    <img src="../assets/prize_text.png">
                     <div class="name row">
                         <img
                             v-for="(bit , bitI) in item.name"
@@ -24,9 +27,7 @@ P<template>
                             alt
                         >
                     </div>
-                    <span>获得：
-                        <br>
-                    </span>
+                    <img src="../assets/prize_text2.png">
                     <div class="userPrize row">
                         <img
                             v-for="(bitP , bitPI) in item.prize"
@@ -53,7 +54,7 @@ export default {
     },
     methods: {
         back() {
-            all.router.go(-1);
+            all.router.push("/");
         },
         next() {
             // window.location.href = location.href;
@@ -115,9 +116,9 @@ export default {
     align-items: center;
 }
 .title {
-    height: 66px;
+    height: 0.8rem;
     width: auto;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
 }
 .over {
     width: 1200px;
@@ -137,8 +138,9 @@ export default {
     -webkit-box-align: start;
     max-height: 6rem;
     -ms-flex-align: start;
-    align-items: flex-start;
-    overflow-y: scroll;
+    width: 14rem;
+    align-items: center;
+    /* overflow-y: scroll; */
 }
 .prizes img {
     height: 0.5rem;
@@ -146,6 +148,21 @@ export default {
 .list {
     margin-top: 0.2rem;
     /* height: 0.5rem; */
+    -ms-flex-negative: 0;
     flex-shrink: 0;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    height: 0.5rem;
+}
+.name img {
+    height: 0.6rem;
+}
+.userPrize img {
+    height: 0.4rem;
+    margin-top: 0.1rem;
+}
+.list > img {
+    margin: 0 0.3rem;
 }
 </style>

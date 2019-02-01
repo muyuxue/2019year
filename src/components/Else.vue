@@ -4,33 +4,29 @@
         <img class="light animated fadeInLeft" src="../assets/threeLight.png">
         <img class="lightA animated fadeInRight" src="../assets/threeLightA.png" @click="prizes">
         <img class="bottom animated fadeInUp" src="../assets/threeBottom.png">
+
         <div class="contentBox">
             <img class="title animated rubberBand" src="../assets/btnElse.png" @click="fresh">
-            <div class="gameBar">
-                <img src="../assets/bg_light-1.png" class="stageLight stageLight1">
-                <img src="../assets/bg-light-2.png" class="stageLight" :class="stageLight2">
-                <!-- 舞台 -->
-                <div class="stage">
-                    <img src="../assets/stage.png" class="stageImg">
+            <vue-scratch-card
+                element-id="scratchWrap"
+                class="over animated lightSpeedIn"
+                :cover-img="this.$store.state.img"
+                :ratio="0.4"
+                :move-radius="60"
+                :start-callback="startCallback"
+                :clear-callback="clearCallback"
+                cover-color="red"
+            >
+                <div slot="result" class="content">
+                    <span v-if="time<=15">恭喜</span>
+                    <span v-if="time<=15" class="name" v-text="name"></span>
+                    <span v-if="time<=15">获得</span>
+                    <span v-if="time<=15" class="amount" v-text="amount+'泰铢'"></span>
+                    <span v-if="time>15">恭喜大家发大财哦！</span>
                 </div>
-                <!-- 蛋 -->
-                <img
-                    class="egg"
-                    :class="[isHammer?'':'eggRotate' ,name&&name.length>0?'hide':'' ]"
-                    src="../assets/egg.png"
-                    @click.once="startCallback"
-                >
-                <!-- 锤子 -->
-                <img src="../assets/hammer.png" class="hammer" :class="isHammer?'hammerEggAni':''">
-                <div class="nameBox row animated heartBeat infinite slow">
-                    <img
-                        v-for="(src , index) in name"
-                        :key="index"
-                        :src="require('../assets/'+src+(index>0?'_0':'')+'.png')"
-                    >
-                </div>
-            </div>
+            </vue-scratch-card>
         </div>
+        <audio class="threeAudio" id="threeAudio" src="../assets/three.mp3" preload="auto"></audio>
     </div>
 </template>
 
@@ -41,46 +37,117 @@ export default {
             name: "",
             list: [],
             amount: "",
-            isHammer: false, //是否砸金蛋
-            stageLight2: ""
+            time: ""
         };
     },
+    inject: ["reload"],
     methods: {
         back() {
+            // all.router.go(-1);
             all.router.push("/");
         },
         fresh() {
-            window.location.href = location.href;
+            this.reload();
+            // window.location.href = location.href;
+            // all.router.push("index");
         },
         prizes() {
             all.router.push("/prize");
         },
         startCallback() {
             if (this.list.length == 0) return;
-            this.isHammer = true;
             let index = Math.floor(Math.random() * this.list.length);
-            setTimeout(() => {
-                this.name = this.list[index];
-                all.tool.savePaizeList("else", this.name, "especially");
-
-                all.tool.delKey(this.list, this.name, "elseList");
-            }, 1000);
+            this.name = this.list[index];
             this.amount = Math.floor(Math.random() * 6 + 10) * 100;
-            console.log(this.list[index]);
-            this.hammerEggAni = "hammerEggAni";
+
+            all.tool.savePaizeList("else", this.name, "especially");
+
+            all.tool.delKey(this.list, this.name, "elseList");
+        },
+        clearCallback() {
+            all.tool.playAudio("threeAudio");
         }
     },
     mounted() {
         this.list = all.tool.getLocal("elseList");
         all.tool.setLocal("stage", "else");
+        console.log(this.time);
         console.log(this.list);
-        setTimeout(() => {
-            this.stageLight2 = "stageLight2";
-        }, 2000);
     }
 };
 </script>
 
 <style scoped>
-@import "../css/else.css";
+.else {
+    background: url("../assets/bg.png") no-repeat center;
+    background-size: 100% 100%;
+    position: relative;
+    min-width: 1920px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.top {
+    position: absolute;
+    top: 0;
+    width: 1563px;
+    height: auto;
+}
+.light {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 311px;
+    height: auto;
+}
+.lightA {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 339px;
+    height: auto;
+}
+.bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+}
+.contentBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title {
+    height: 66px;
+    width: auto;
+    margin-bottom: 80px;
+}
+.over {
+    width: 1200px;
+    height: 500px;
+}
+.content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    background: url("../assets/bgB.jpg") no-repeat;
+    background-size: 100% 100%;
+    padding: 50px;
+    font-size: 48px;
+    color: red;
+}
+.name {
+    font-size: 120px;
+    color: #f8dcb0;
+}
+.amount {
+    font-size: 120px;
+    color: #f8dcb0;
+}
 </style>

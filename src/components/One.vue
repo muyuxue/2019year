@@ -28,6 +28,7 @@
                     <img class="pigImg" src="../assets/onePigFront.png">
                 </div>
             </div>
+            <audio class="oneAudio" id="oneAudio" src="../assets/one.mp3" preload="auto"></audio>
         </div>
     </div>
 </template>
@@ -44,12 +45,14 @@ export default {
             canClick: true
         };
     },
+    inject: ["reload"],
     methods: {
         back() {
-           all.router.push("/");
+            all.router.push("/");
         },
         fresh() {
-            window.location.href = location.href;
+            this.reload();
+            // window.location.href = location.href;
         },
         prizes() {
             all.router.push("/prize");
@@ -80,6 +83,7 @@ export default {
                 // that.pigList[clickIndex] = that.list[index];
                 all.tool.savePaizeList("one", that.pigList[clickIndex], 10000);
                 all.tool.delKey(that.list.slice(0), that.pigList[clickIndex]);
+                all.tool.playAudio("oneAudio");
             }, 1000);
         }
     },
