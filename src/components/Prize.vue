@@ -32,7 +32,7 @@ P<template>
                         <img
                             v-for="(bitP , bitPI) in item.prize"
                             :key="item.prize+bitP+bitPI+index"
-                            :src="require('../assets/'+ bitPI+'.png')"
+                            :src="require('../assets/'+ bitP+'.png')"
                             alt
                         >
                     </div>
