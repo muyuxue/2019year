@@ -28,13 +28,16 @@ P<template>
                         >
                     </div>
                     <img src="../assets/prize_text2.png">
-                    <div class="userPrize row">
+                    <div class="userPrize row" v-if="parseInt(item.prize)>0 ">
                         <img
                             v-for="(bitP , bitPI) in item.prize"
                             :key="item.prize+bitP+bitPI+index"
-                            :src="require('../assets/'+(parseInt(item.prize)>0? bitP:(bitPI>0?bitP+'_0':bitP.toUpperCase()))+'.png')"
+                            :src="require('../assets/'+ (bitPI>0?bitP+'_0':bitP.toUpperCase())+'.png')"
                             alt
                         >
+                    </div>
+                    <div class="userPrizeText" v-else>
+                        <span>{{item.prize}}</span>
                     </div>
                 </div>
             </div>
@@ -161,6 +164,10 @@ export default {
 .userPrize img {
     height: 0.4rem;
     margin-top: 0.1rem;
+}
+.userPrizeText {
+    font-size: 0.5rem;
+    color: #fff4c1;
 }
 .list > img {
     margin: 0 0.3rem;
