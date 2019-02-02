@@ -21,7 +21,7 @@
                     <span v-if="time<=15">恭喜</span>
                     <span v-if="time<=15" class="name" v-text="name"></span>
                     <span v-if="time<=15">获得</span>
-                    <span v-if="time<=15" class="amount" v-text="amount+'泰铢'"></span>
+                    <span v-if="time<=15" class="amount" v-text="'苹果XS'"></span>
                     <span v-if="time>15">恭喜大家发大财哦！</span>
                 </div>
             </vue-scratch-card>
@@ -60,7 +60,7 @@ export default {
             this.name = this.list[index];
             this.amount = Math.floor(Math.random() * 6 + 10) * 100;
 
-            all.tool.savePaizeList("else", this.name, "especially");
+            all.tool.savePaizeList("else", this.name, "iphone XS");
 
             all.tool.delKey(this.list, this.name, "elseList");
         },
