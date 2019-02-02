@@ -154,11 +154,11 @@ export default {
 }
 .pigBar {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 4rem;
+    height: 4rem;
 }
 .pigImg {
-    width: 200px;
+    width: 4rem;
     height: auto;
     position: absolute;
     top: 0;
@@ -173,7 +173,7 @@ export default {
 .pigImg:last-child {
     transform: rotateY(180deg);
     backface-visibility: hidden;
-    width: 220px;
+    width: 4.02rem;
 }
 .pigBar.click img {
     transform: rotateY(180deg);
@@ -183,18 +183,27 @@ export default {
     left: -20px;
 }
 .name {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     position: absolute;
     z-index: 2;
+    -webkit-writing-mode: tb-rl;
+    -ms-writing-mode: tb-rl;
     writing-mode: tb-rl;
-    font-size: 24px;
-    left: -5px;
+    font-size: 0.4rem;
+    left: 0.1rem;
     top: 15px;
     color: #791f16;
-    height: 150px;
-    width: 60px;
+    height: 3rem;
+    width: 1rem;
+    -webkit-transform: rotateZ(1deg);
     transform: rotateZ(1deg);
 }
 .delay1 {
